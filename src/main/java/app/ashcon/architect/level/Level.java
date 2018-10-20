@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Field;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
@@ -89,7 +90,17 @@ public class Level implements Model {
      * @param fields The fields that changed.
      */
     public synchronized void commit(String... fields) {
-        // TODO(ashcon): Instead of sending full update, send partial update
+        for(Field decField : this.getClass().getDeclaredFields()) {
+            SerializedName serializedName = decField.getAnnotation(SerializedName.class);
+            if(serializedName == null)
+                continue;
+            for (String alteredField : fields) {
+                if (serializedName.value().equalsIgnoreCase(alteredField)) {
+                    // TODO(Zinno): Commit specific field to database
+                    return;
+                }
+            }
+        }
     }
 
     /**

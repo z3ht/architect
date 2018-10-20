@@ -35,6 +35,7 @@ public class ArchitectApp extends JavaPlugin {
                     bind(Level.class).toProvider(component.levelNamedProvider());
                 }
             });
+
             graph.groupedCommands().registerGrouped(component.levelCommands());
         });
     }

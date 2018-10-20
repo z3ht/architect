@@ -66,7 +66,8 @@ public class LevelLoader {
         }).createWorld();
         world.setAutoSave(false);
         world.setKeepSpawnInMemory(false);
-        world.setSpawnLocation(level.getSpawn().toLocation(world));
+        Location spawn = level.getSpawn().toLocation(world);
+        world.setSpawnLocation(spawn.getBlockX(), spawn.getBlockY(), spawn.getBlockZ());
         if(initalize) {
             world.setGameRuleValue("doGiveCredit", "architect");
             world.setGameRuleValue("doDaylightCycle", "false");

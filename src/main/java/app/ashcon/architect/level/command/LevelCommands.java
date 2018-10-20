@@ -31,8 +31,10 @@ import java.util.function.Supplier;
 /**
  * Represents user-commands to interact with {@link Level}s.
  */
-// TODO(ashcon): Add list of levels
+// TODO(Zinno): Add list of levels
 // TODO(ashcon): Fix intake public-only methods
+    // TODO(Zinno): Figure out what the problem with public-only fields is
+// TODO(Zinno): Figure out what the @Group() annotation is
 @Reusable
 @Group({@At("level"), @At("lvl")})
 public class LevelCommands {
@@ -179,11 +181,11 @@ public class LevelCommands {
             },
             () -> {
                 if(!canView) {
-                    return "You need the " + Role.VIEWER + " role to edit the " + name;
+                    return "You need the " + Role.VIEWER + " role to view the " + name;
                 } else if(!canEdit) {
                     return "You need the " + role + " role to edit the " + name;
                 } else {
-                    return "The " + name + " already is set to " + oldValue;
+                    return "The " + name + " is already set to " + oldValue;
                 }
             }
         );

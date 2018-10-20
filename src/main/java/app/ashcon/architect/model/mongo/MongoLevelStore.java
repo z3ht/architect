@@ -84,21 +84,21 @@ public class MongoLevelStore extends MongoModelStore<Level> implements LevelStor
 
     @Override
     public boolean upload(String id, File source) {
-        if(source.isDirectory() && source.listFiles().length > 0) {
-            deleteFile(id);
-            final GridFSUploadStream upload = bucket.openUploadStream(new BsonString(id), id);
-            try {
-                ZipOutputStream zip = new ZipOutputStream(upload);
-                Zip.compress(source, zip);
-                zip.close();
-            } catch(IOException ioe) {
-                ioe.printStackTrace();
-                return false;
-            }
-            upload.close();
-            return true;
+        if(!(source.isDirectory()) || source.listFiles().length <= 0) {
+            return false;
         }
-        return false;
+        deleteFile(id);
+        final GridFSUploadStream upload = bucket.openUploadStream(new BsonString(id), id);
+        try {
+            ZipOutputStream zip = new ZipOutputStream(upload);
+            Zip.compress(source, zip);
+            zip.close();
+        } catch(IOException ioe) {
+            ioe.printStackTrace();
+            return false;
+        }
+        upload.close();
+        return true;
     }
 
     @Override
